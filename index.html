@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trinity Engine V10.3.5 - SIU Shadow-Center</title>
+    <title>Trinity Engine V10.3.9 - SIU Shadow-Center</title>
     <style>
         :root {
             --matrix-green: #00ff41;
@@ -190,15 +190,15 @@
 
 <div id="main-interface">
     <header>
-        <h1 style="margin: 0; letter-spacing: 10px;">TRINITY ENGINE V10.3.5</h1>
-        <div style="font-size: 0.8rem; color: #fff; margin-top: 5px;">SIU AUDIT SUITE // VOICE-TO-REALITY // ARCHITECT: TY</div>
+        <h1 style="margin: 0; letter-spacing: 10px;">TRINITY ENGINE V10.3.9</h1>
+        <div style="font-size: 0.8rem; color: #fff; margin-top: 5px;">SIU AUDIT SUITE // APEX VOICE ENGINE // ARCHITECT: TY</div>
     </header>
 
     <div class="grid-layout">
         <div class="panel">
             <h2>I. INITIALIZE CLAIM INTERVIEW</h2>
             <button id="mic-btn" onclick="toggleVoice()">START VOICE CAPTURE</button>
-            <div id="status-msg" style="font-size: 0.7rem; color: #fff; margin-top: 5px;">MIC: STANDBY</div>
+            <div id="status-msg" style="font-size: 0.7rem; color: #fff; margin-top: 5px; border-bottom: 1px solid #333; padding-bottom: 5px;">MIC STATUS: STANDBY</div>
             <button onclick="addLog('EXTERNAL DATA STREAMING...')">INITIALIZE EXTERNAL AUDIT</button>
         </div>
 
@@ -237,9 +237,15 @@
 
 <script>
     function unlock() {
-        if(document.getElementById('access-id').value.toUpperCase() === "TY-ARCHITECT-01" && document.getElementById('protocol-key').value === "TRZ-7789-APEX") {
+        const id = document.getElementById('access-id').value.trim();
+        const key = document.getElementById('protocol-key').value.trim();
+        
+        // UPDATED CREDENTIALS: tylermcd / crayon
+        if(id.toLowerCase() === "tylermcd" && key === "crayon") {
             document.getElementById('security-lock').style.display = 'none';
             document.getElementById('main-interface').style.display = 'block';
+        } else {
+            document.getElementById('err').innerText = "CREDENTIALS REJECTED";
         }
     }
 
@@ -262,19 +268,19 @@
             isListening = true;
             document.getElementById('mic-btn').classList.add('mic-active');
             document.getElementById('mic-btn').innerText = "LISTENING... (STOP)";
-            addLog("VOICE ENGINE ONLINE.");
+            addLog("VOICE ENGINE ONLINE. REALITY SYNC ACTIVE.");
         };
 
         recognition.onresult = (event) => {
             let interim = '';
             for (let i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
-                    addLog(`CONFIRMED: ${event.results[i][0].transcript.toUpperCase()}`);
+                    addLog(`CAPTURED: ${event.results[i][0].transcript.toUpperCase()}`);
                 } else {
                     interim += event.results[i][0].transcript;
                 }
             }
-            document.getElementById('status-msg').innerText = "LIVE: " + interim;
+            document.getElementById('status-msg').innerText = "LIVE STREAM: " + interim;
         };
 
         recognition.onend = () => {
@@ -285,7 +291,7 @@
     }
 
     function toggleVoice() {
-        if (!recognition) return alert("Browser not supported.");
+        if (!recognition) return alert("System incompatibility.");
         isListening ? recognition.stop() : recognition.start();
     }
 
@@ -300,31 +306,5 @@
 
     function commitVault() {
         const val = document.getElementById('cash').value;
-        const status = document.getElementById('assess').value;
-        if(status === 'verified' && val) {
-            document.getElementById('bar').style.width = "100%";
-            document.getElementById('p-text').innerText = "100% - FLAWLESS VICTORY";
-            addLog(`RECOVERY OF $${val} FINALIZED IN VAULT.`);
-        }
-    }
-
-    const canvas = document.getElementById('matrix');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const chars = "1010101TRINITY7789APEX";
-    const drops = Array(Math.floor(canvas.width/18)).fill(1);
-    function draw() {
-        ctx.fillStyle = "rgba(0,0,0,0.05)"; ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle = "#0F0"; ctx.font = "15px monospace";
-        drops.forEach((y, i) => {
-            const txt = chars[Math.floor(Math.random()*chars.length)];
-            ctx.fillText(txt, i*18, y*18);
-            if(y*18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-            drops[i]++;
-        });
-    }
-    setInterval(draw, 50);
-</script>
-</body>
-</html>
+        const status = document
 
