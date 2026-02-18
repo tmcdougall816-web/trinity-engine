@@ -1,0 +1,15 @@
+{
+  "name": "trinity-shadow-engine",
+  "version": "10.2.8",
+  "description": "SIU Shadow-Center Audit Suite",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
