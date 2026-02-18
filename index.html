@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trinity Engine V10.2.8 - SIU Shadow-Center</title>
+    <style>
+        :root {
+            --matrix-green: #00ff41;
+            --icbc-blue: #005495;
+            --danger-red: #ff0000;
+            --void-black: #0d0208;
+            --terminal-gray: #1a1a1a;
+        }
+
+        body, html {
+            background-color: var(--void-black);
+            color: var(--matrix-green);
+            font-family: 'Courier New', Courier, monospace;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        canvas#matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.25;
+        }
+
+        /* --- THE VAULT SENTRY (LOGIN) --- */
+        #security-lock {
+            width: 450px;
+            padding: 50px;
+            border: 3px solid var(--matrix-green);
+            background: rgba(0, 0, 0, 0.98);
+            box-shadow: 0 0 50px rgba(0, 255, 65, 0.4);
+            text-align: center;
+            z-index: 1000;
+            transition: all 0.5s ease;
+        }
+
+        .lock-header {
+            font-size: 1.8rem;
+            letter-spacing: 8px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        /* --- MAIN SIU INTERFACE --- */
+        #main-interface {
+            display: none;
+            width: 95%;
+            max-width: 1300px;
+            height: 92vh;
+            border: 2px solid var(--matrix-green);
+            padding: 30px;
+            background: rgba(13, 2, 8, 0.98);
+            box-shadow: 0 0 30px var(--matrix-green);
+            overflow: hidden;
+            box-sizing: border-box;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            gap: 25px;
+            height: 100%;
+        }
+
+        header {
+            grid-column: span 2;
+            text-align: center;
+            border-bottom: 2px solid var(--matrix-green);
+            padding-bottom: 15px;
+        }
+
+        .panel {
+            border: 1px solid var(--matrix-green);
+            padding: 20px;
+            background: rgba(20, 20, 20, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        h2 { font-size: 0.9rem; margin: 0; color: #fff; text-transform: uppercase; border-left: 4px solid var(--matrix-green); padding-left: 10px; }
+
+        input, select {
+            background: #000;
+            border: 1px solid #333;
+            color: var(--matrix-green);
+            padding: 12px;
+            font-family: inherit;
+            font-size: 0.9rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        input:focus { border-color: var(--matrix-green); outline: none; box-shadow: 0 0 10px var(--matrix-green); }
+
+        button {
+            background: var(--matrix-green);
+            color: #000;
+            border: none;
+            padding: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            letter-spacing: 2px;
+            transition: 0.2s;
+        }
+
+        button:hover { background: #fff; box-shadow: 0 0 20px #fff; }
+
+        #media-theater {
+            flex-grow: 1;
+            background: #000;
+            border: 1px dashed #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .prob-container {
+            height: 50px;
+            background: #111;
+            border: 2px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prob-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #ff0000, #ffff00, #00ff41);
+            transition: width 2s cubic-bezier(0.1, 0.7, 1.0, 0.1);
+        }
+
+        #audit-log {
+            height: 150px;
+            background: #000;
+            border: 1px solid var(--matrix-green);
+            padding: 10px;
+            font-size: 0.8rem;
+            overflow-y: auto;
+            color: var(--matrix-green);
+        }
+
+        .glitch { animation: glitch 2s infinite; }
+        @keyframes glitch { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+
+    </style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div id="security-lock">
+    <div class="lock-header glitch">ACCESS RESTRICTED</div>
+    <p style="color: #fff; font-size: 0.8rem; margin-bottom: 25px;">TRZ-7789 ENCRYPTED INTERFACE</p>
+    <input type="text" id="access-id" placeholder="ARCHITECT ACCESS ID" autocomplete="off" style="margin-bottom: 15px; text-align: center;">
+    <input type="password" id="protocol-key" placeholder="PROTOCOL SECURITY KEY" style="margin-bottom: 25px; text-align: center;">
+    <button onclick="unlock()">INITIALIZE SHADOW-CENTER</button>
+    <p id="err" style="color: var(--danger-red); font-size: 0.75rem; margin-top: 15px;"></p>
+</div>
+
+<div id="main-interface">
+    <header>
+        <h1 style="margin: 0; letter-spacing: 10px;">TRINITY ENGINE V10.2.8</h1>
+        <div style="font-size: 0.8rem; color: #fff; margin-top: 5px;">SIU AUDIT SUITE // $2B RECOVERY LOGIC // ARCHITECT: TY</div>
+    </header>
+
+    <div class="grid-layout">
+        <div class="panel">
+            <h2>I. INITIALIZE CLAIM INTERVIEW</h2>
+            <button onclick="addLog('INITIALIZING SPEECH-TO-REALITY SYNC...')">START VOICE CAPTURE</button>
+            <button onclick="addLog('EXTERNAL DATA STREAMING...')">INITIALIZE EXTERNAL AUDIT</button>
+        </div>
+
+        <div class="panel">
+            <h2>IV. SETTLEMENT PROBABILITY</h2>
+            <div class="prob-container">
+                <div id="bar" class="prob-bar"></div>
+            </div>
+            <div id="p-text" style="text-align: center; font-weight: bold; font-size: 1.2rem;">0% CERTAINTY</div>
+        </div>
+
+        <div class="panel">
+            <h2>II. GEO-SPATIAL ACCIDENT RECON</h2>
+            <input type="text" id="case-id" placeholder="CLAIM ID (e.g. TC-2023-PILEUP-3.5M)">
+            <input type="text" id="statute" placeholder="STATUTORY ANCHOR (RSBC 1996 c.318 s.144)">
+            <button onclick="runAudit()">VALIDATE LIABILITY DATA</button>
+            <label style="font-size: 0.7rem; color: #666;">III. LIVE SCENE INJECTION</label>
+            <input type="text" placeholder="TRAFFIC CAMERA URL CLOUD LINK">
+            <div id="media-theater">[ CAMERA INJECTION STANDBY ]</div>
+        </div>
+
+        <div class="panel">
+            <h2>V. CAMERA INJECTION STORAGE</h2>
+            <input type="number" id="cash" placeholder="TOTAL RECOVERY TARGET ($)">
+            <select id="assess">
+                <option value="none">-- SELECT ASSESSMENT --</option>
+                <option value="adverse">ADVERSE (FRAUD DETECTED)</option>
+                <option value="verified">VERIFIED CREDIBLE (REALITY LOCK)</option>
+            </select>
+            <button onclick="commitVault()">COMMIT TO ADJUDICATION</button>
+            <div id="audit-log">> SYSTEM READY. AWAITING DATA...</div>
+            <button style="background: #fff; padding: 10px;" onclick="window.print()">EXPORT FINAL CLAIM REPORT</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // SECURE HANDSHAKE
+    function unlock() {
+        const id = document.getElementById('access-id').value.toUpperCase();
+        const key = document.getElementById('protocol-key').value;
+        if(id === "TY-ARCHITECT-01" && key === "TRZ-7789-APEX") {
+            document.getElementById('security-lock').style.display = 'none';
+            document.getElementById('main-interface').style.display = 'block';
+        } else {
+            document.getElementById('err').innerText = "CREDENTIALS REJECTED BY TRZ-7789";
+        }
+    }
+
+    // LOGIC CORE
+    function addLog(m) {
+        const l = document.getElementById('audit-log');
+        l.innerHTML += `<br>> ${m}`;
+        l.scrollTop = l.scrollHeight;
+    }
+
+    function runAudit() {
+        if(!document.getElementById('case-id').value) return alert("CLAIM ID REQUIRED");
+        addLog(`AUDITING CASE AGAINST BC STATUTES...`);
+        setTimeout(() => {
+            document.getElementById('bar').style.width = "72%";
+            document.getElementById('p-text').innerText = "72% CERTAINTY";
+            addLog("LIABILITY ANCHORED. CROSS-REFERENCING SCENE INJECTION.");
+        }, 1200);
+    }
+
+    function commitVault() {
+        const val = document.getElementById('cash').value;
+        const status = document.getElementById('assess').value;
+        if(status === 'verified' && val) {
+            document.getElementById('bar').style.width = "100%";
+            document.getElementById('p-text').innerText = "100% - FLAWLESS VICTORY";
+            document.getElementById('p-text').style.color = "#00ff41";
+            document.getElementById('media-theater').innerText = "EVIDENCE REALITY SECURED";
+            document.getElementById('media-theater').style.color = "#00ff41";
+            addLog(`RECOVERY OF $${val} FINALIZED IN VAULT.`);
+        }
+    }
+
+    // MATRIX BACKGROUND (HIGH DENSITY)
+    const canvas = document.getElementById('matrix');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const chars = "1010101TRINITY7789APEX";
+    const drops = Array(Math.floor(canvas.width/18)).fill(1);
+    function draw() {
+        ctx.fillStyle = "rgba(0,0,0,0.05)"; ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = "#0F0"; ctx.font = "15px monospace";
+        drops.forEach((y, i) => {
+            const txt = chars[Math.floor(Math.random()*chars.length)];
+            ctx.fillText(txt, i*18, y*18);
+            if(y*18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }
+    setInterval(draw, 50);
+</script>
+</body>
+</html>
+
+
