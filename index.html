@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trinity Engine V10.4.0 - SKELETON KEY</title>
+    <title>Trinity Engine V10.5.0 - DIRECT LINK</title>
     <style>
         :root {
             --matrix-green: #00ff41;
@@ -36,28 +36,9 @@
             opacity: 0.25;
         }
 
-        /* --- THE VAULT SENTRY (LOGIN) --- */
-        #security-lock {
-            width: 450px;
-            padding: 50px;
-            border: 3px solid var(--matrix-green);
-            background: rgba(0, 0, 0, 0.98);
-            box-shadow: 0 0 50px rgba(0, 255, 65, 0.4);
-            text-align: center;
-            z-index: 1000;
-            transition: all 0.5s ease;
-        }
-
-        .lock-header {
-            font-size: 1.8rem;
-            letter-spacing: 8px;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px var(--matrix-green);
-        }
-
-        /* --- MAIN SIU INTERFACE --- */
+        /* --- MAIN SIU INTERFACE (ALWAYS VISIBLE) --- */
         #main-interface {
-            display: none;
+            display: block; /* FORCED VISIBLE */
             width: 95%;
             max-width: 1300px;
             height: 92vh;
@@ -170,30 +151,16 @@
             100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
         }
 
-        .glitch { animation: glitch 2s infinite; }
-        @keyframes glitch { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
-
     </style>
 </head>
 <body>
 
 <canvas id="matrix"></canvas>
 
-<div id="security-lock">
-    <div class="lock-header glitch">ACCESS RESTRICTED</div>
-    <p style="color: #fff; font-size: 0.8rem; margin-bottom: 25px;">TRZ-7789 ENCRYPTED INTERFACE</p>
-    
-    <input type="text" id="access-id" value="tylermcd" placeholder="ARCHITECT ACCESS ID" style="margin-bottom: 15px; text-align: center;">
-    <input type="password" id="protocol-key" value="crayon" placeholder="PROTOCOL SECURITY KEY" style="margin-bottom: 25px; text-align: center;">
-    
-    <button onclick="unlock()">INITIALIZE SHADOW-CENTER</button>
-    <p id="err" style="color: var(--danger-red); font-size: 0.75rem; margin-top: 15px;"></p>
-</div>
-
 <div id="main-interface">
     <header>
-        <h1 style="margin: 0; letter-spacing: 10px;">TRINITY ENGINE V10.4.0</h1>
-        <div style="font-size: 0.8rem; color: #fff; margin-top: 5px;">SIU AUDIT SUITE // APEX VOICE ENGINE // ARCHITECT: TY</div>
+        <h1 style="margin: 0; letter-spacing: 10px;">TRINITY ENGINE V10.5.0</h1>
+        <div style="font-size: 0.8rem; color: #fff; margin-top: 5px;">SIU AUDIT SUITE // DIRECT LINK MODE // ARCHITECT: TY</div>
     </header>
 
     <div class="grid-layout">
@@ -238,7 +205,5 @@
 </div>
 
 <script>
-    // --- BYPASS LOGIC ---
-    function unlock() {
-        // This function now ignores exact matching and
+    function addLog
 
