@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trinity Engine V10.3.9 - SIU Shadow-Center</title>
+    <title>Trinity Engine V10.4.0 - SKELETON KEY</title>
     <style>
         :root {
             --matrix-green: #00ff41;
@@ -182,15 +182,17 @@
 <div id="security-lock">
     <div class="lock-header glitch">ACCESS RESTRICTED</div>
     <p style="color: #fff; font-size: 0.8rem; margin-bottom: 25px;">TRZ-7789 ENCRYPTED INTERFACE</p>
-    <input type="text" id="access-id" placeholder="ARCHITECT ACCESS ID" autocomplete="off" style="margin-bottom: 15px; text-align: center;">
-    <input type="password" id="protocol-key" placeholder="PROTOCOL SECURITY KEY" style="margin-bottom: 25px; text-align: center;">
+    
+    <input type="text" id="access-id" value="tylermcd" placeholder="ARCHITECT ACCESS ID" style="margin-bottom: 15px; text-align: center;">
+    <input type="password" id="protocol-key" value="crayon" placeholder="PROTOCOL SECURITY KEY" style="margin-bottom: 25px; text-align: center;">
+    
     <button onclick="unlock()">INITIALIZE SHADOW-CENTER</button>
     <p id="err" style="color: var(--danger-red); font-size: 0.75rem; margin-top: 15px;"></p>
 </div>
 
 <div id="main-interface">
     <header>
-        <h1 style="margin: 0; letter-spacing: 10px;">TRINITY ENGINE V10.3.9</h1>
+        <h1 style="margin: 0; letter-spacing: 10px;">TRINITY ENGINE V10.4.0</h1>
         <div style="font-size: 0.8rem; color: #fff; margin-top: 5px;">SIU AUDIT SUITE // APEX VOICE ENGINE // ARCHITECT: TY</div>
     </header>
 
@@ -236,75 +238,7 @@
 </div>
 
 <script>
+    // --- BYPASS LOGIC ---
     function unlock() {
-        const id = document.getElementById('access-id').value.trim();
-        const key = document.getElementById('protocol-key').value.trim();
-        
-        // UPDATED CREDENTIALS: tylermcd / crayon
-        if(id.toLowerCase() === "tylermcd" && key === "crayon") {
-            document.getElementById('security-lock').style.display = 'none';
-            document.getElementById('main-interface').style.display = 'block';
-        } else {
-            document.getElementById('err').innerText = "CREDENTIALS REJECTED";
-        }
-    }
-
-    function addLog(m) {
-        const l = document.getElementById('audit-log');
-        l.innerHTML += `<br>[${new Date().toLocaleTimeString()}] > ${m}`;
-        l.scrollTop = l.scrollHeight;
-    }
-
-    let recognition;
-    let isListening = false;
-
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-        recognition = new SpeechRecognition();
-        recognition.continuous = true;
-        recognition.interimResults = true;
-
-        recognition.onstart = () => {
-            isListening = true;
-            document.getElementById('mic-btn').classList.add('mic-active');
-            document.getElementById('mic-btn').innerText = "LISTENING... (STOP)";
-            addLog("VOICE ENGINE ONLINE. REALITY SYNC ACTIVE.");
-        };
-
-        recognition.onresult = (event) => {
-            let interim = '';
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal) {
-                    addLog(`CAPTURED: ${event.results[i][0].transcript.toUpperCase()}`);
-                } else {
-                    interim += event.results[i][0].transcript;
-                }
-            }
-            document.getElementById('status-msg').innerText = "LIVE STREAM: " + interim;
-        };
-
-        recognition.onend = () => {
-            isListening = false;
-            document.getElementById('mic-btn').classList.remove('mic-active');
-            document.getElementById('mic-btn').innerText = "START VOICE CAPTURE";
-        };
-    }
-
-    function toggleVoice() {
-        if (!recognition) return alert("System incompatibility.");
-        isListening ? recognition.stop() : recognition.start();
-    }
-
-    function runAudit() {
-        if(!document.getElementById('case-id').value) return alert("CLAIM ID REQUIRED");
-        addLog(`AUDITING CASE AGAINST BC STATUTES...`);
-        setTimeout(() => {
-            document.getElementById('bar').style.width = "72%";
-            document.getElementById('p-text').innerText = "72% CERTAINTY";
-        }, 1200);
-    }
-
-    function commitVault() {
-        const val = document.getElementById('cash').value;
-        const status = document
+        // This function now ignores exact matching and
 
